@@ -13,6 +13,7 @@ function App() {
       setCandidates(data ?? []);
     })();
   }, []);
+  console.log(candidates);
   return (
     <div className="App">
       <Router>
