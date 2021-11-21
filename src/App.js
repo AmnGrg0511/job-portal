@@ -1,23 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Candidate } from "./components/Candidate";
+import { Candidates } from "./components/Candidates";
 function App() {
+  const [candidates, setCandidates] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "https://s3-ap-southeast-1.amazonaws.com/he-public-data/users49b8675.json"
+      );
+      const data = await response.json();
+      setCandidates(data ?? []);
+    })();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route
+            path="/shortlisted"
+            element={
+              <Candidates
+                candidates={candidates.filter((e) => e.status === "shortlist")}
+                setCandidates={setCandidates}
+              />
+            }
+          />
+          <Route
+            path="/rejected"
+            ed
+            element={
+              <Candidates
+                candidates={candidates.filter((e) => e.status === "reject")}
+                setCandidates={setCandidates}
+              />
+            }
+          />
+          <Route
+            path="/:id"
+            element={
+              <Candidate
+                candidates={candidates}
+                setCandidates={setCandidates}
+              />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Candidates
+                candidates={candidates}
+                setCandidates={setCandidates}
+              />
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
