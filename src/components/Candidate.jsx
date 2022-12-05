@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 export const Candidate = ({ candidates, setCandidates }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { name, Image } = candidates?.find((e) => e.id === id);
+  const { name, Image } = candidates?.find((e) => e.id === id) ?? {};
 
   const handle = (status) => {
     setCandidates((prev) =>

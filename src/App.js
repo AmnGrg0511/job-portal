@@ -13,7 +13,7 @@ function App() {
       setCandidates(data ?? []);
     })();
   }, []);
-  console.log(candidates);
+
   return (
     <div className="App">
       <Router>
@@ -23,17 +23,14 @@ function App() {
             element={
               <Candidates
                 candidates={candidates.filter((e) => e.status === "shortlist")}
-                setCandidates={setCandidates}
               />
             }
           />
           <Route
             path="/rejected"
-            ed
             element={
               <Candidates
                 candidates={candidates.filter((e) => e.status === "reject")}
-                setCandidates={setCandidates}
               />
             }
           />
@@ -51,7 +48,6 @@ function App() {
             element={
               <Candidates
                 candidates={candidates}
-                setCandidates={setCandidates}
               />
             }
           />

@@ -1,13 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export const Candidates = ({ candidates, setCandidates }) => {
+export const Candidates = ({ candidates }) => {
+  console.log(candidates);
+  const [currCandidates, setCurrCandidates] = useState(candidates);
+
+  useEffect(() => {
+    setCurrCandidates(candidates);
+  },[candidates])
+
   function autocomplete(input) {
-    if (input === "") {
-      return;
-    }
-    var reg = new RegExp(input);
-    setCandidates((prev) => prev.filter(({ name }) => name.match(reg)));
+    var reg = new RegExp(input,'i');
+    setCurrCandidates(candidates.filter(({ name }) => name.match(reg)));
   }
+
   return (
     <div className="container">
       <div style={{ width: "100%", display: "flex" }}>
@@ -23,7 +29,7 @@ export const Candidates = ({ candidates, setCandidates }) => {
           <button className="button button-shadow">Rejected</button>
         </Link>
       </div>
-      {candidates.map(({ Image, name, id }) => (
+      {currCandidates.map(({ Image, name, id }) => (
         <Link
           to={"/" + id}
           style={{ textDecoration: "none", alignSelf: "center" }}
